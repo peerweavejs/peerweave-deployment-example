@@ -38,3 +38,18 @@ Coturn UDP/TCP/TLS/SNI checks at commit `ffb27fd1e886a93c116193f89cb13c3a00cdbea
 Source was committed and pushed; no package publication or production deployment was performed.
 Provide production hostnames, credentials, membership, secret/certificate files and external
 acceptance evidence using the [deployment guide](webrtc-production.md).
+
+## Rich-app regression ownership (2026-10-15)
+
+This repository now solely owns the four richer Gyral pages and their original browser/model/
+protocol regressions. The framework keeps one separate vanilla TypeScript video page. All 126
+browser assertion statements across 18 cases were verified unchanged by AST comparison; only
+fixture paths, explicit development room memberships and the ICE API proxy changed. The three
+existing model/protocol files match byte-for-byte. No app runtime source, packaged library or
+production deployment configuration changed.
+
+The updated `pnpm check` passed all 42 unit/model/request cases, all 18 migrated browser cases,
+and the built native app smoke. Browser checks include the four routes in both themes across
+Chromium, Firefox and WebKit, mobile layout, keyboard navigation, 200% zoom and axe. Coverage
+remains the values above. The complete workflow runs these checks before its existing image,
+Traefik and Coturn gates. See the [completed plan](exec-plans/completed/003-browser-regressions.md).

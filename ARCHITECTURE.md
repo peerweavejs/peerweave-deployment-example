@@ -16,8 +16,9 @@ flowchart LR
 ```
 
 `apps/web` owns rendering, application readiness/invitations, file transfer and disposable runtime
-controllers. Its four starting pages were copied from Peerweave's reference samples; they are
-application-owned snapshots with their own evolution, not imports from a framework source tree.
+controllers. Its four starting pages originated in Peerweave's reference samples; this repository
+now owns their implementation and original browser/model/protocol regressions. The framework
+keeps a separate minimal vanilla video page, so the richer UI has one source of truth here.
 Pure Gyral models/views depend on serializable state; controllers retain tracks, peers and URLs.
 
 `apps/server` owns the authenticated HTTP API and two-member WebSocket room relay. Room policy

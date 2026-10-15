@@ -21,8 +21,9 @@ A browser framework and a deployed calling application have different responsibi
 repo demonstrates the application work around WebRTC: identifying users, authorizing rooms,
 issuing expiring ICE credentials, routing WSS, operating TURN and checking the real packet path.
 
-The framework repo owns library APIs, native contracts and lightweight samples. This repo owns
-its deployable app copy, operational policy, container images and infrastructure. It consumes
+The framework repo owns library APIs, native contracts and one minimal vanilla video sample. This repo owns
+the richer app, operational policy, container images and infrastructure. The framework keeps
+one small vanilla TypeScript video example. This app consumes
 packaged public APIs and can build without a sibling framework checkout.
 
 ## What is included?
@@ -119,8 +120,9 @@ native DNS/network path; a normal HTTP tunnel does not carry its UDP relay traff
 ## Build and test
 
 ```sh
+pnpm exec playwright install --with-deps chromium firefox webkit
 pnpm build                 # Compile the web app and backend
-pnpm check                 # Lint, boundaries, types, coverage and native app smoke
+pnpm check                 # Lint, boundaries, types, coverage, browser regressions and native app smoke
 pnpm build:images          # Build the two runtime images
 pnpm test:deployment       # Linux/Docker: actual authenticated Traefik HTTPS/WSS
 pnpm test:turn:deployment  # Linux/Docker: UDP/TCP/TLS, SNI and relay-only app traffic

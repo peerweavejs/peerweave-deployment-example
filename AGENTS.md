@@ -1,7 +1,7 @@
 # Working in Peerweave Deployment Example
 
 This application pnpm workspace is an application consuming Peerweave's packaged public APIs.
-The framework and its lightweight samples live in the separate Peerweave repository.
+The framework and its minimal vanilla TypeScript video sample live in the separate Peerweave repository.
 
 ## Start here
 
@@ -19,7 +19,7 @@ The framework and its lightweight samples live in the separate Peerweave reposit
 - Use the pnpm version pinned in `package.json` and Node 24 or newer.
 - `pnpm install --frozen-lockfile` installs the checked-in dependency graph.
 - `pnpm dev` runs a loopback-only development server and the four-page web app.
-- `pnpm check` runs formatting/lint, repository checks, build, types, coverage and native app checks.
+- `pnpm check` runs lint, repository checks, build, types, coverage, rich-app regressions and native app checks.
 - `pnpm build:images` builds images; Compose files must never contain `build`.
 - `pnpm test:deployment` and `pnpm test:turn:deployment` require Linux/Docker.
 

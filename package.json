@@ -16,7 +16,8 @@
     "check:repo": "node tools/check-repository.mjs",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "node tools/test-app.mjs",
+    "test:browser": "vitest run --config vitest.e2e.config.ts",
+    "test:e2e": "pnpm test:browser && node tools/test-app.mjs",
     "test:deployment": "node tools/test-deployment.mjs",
     "test:turn:deployment": "node tools/test-turn-deployment.mjs",
     "check": "pnpm lint && pnpm check:repo && pnpm build && pnpm typecheck && pnpm test:coverage && pnpm test:e2e",
@@ -24,6 +25,7 @@
     "vendor:peerweave": "node tools/vendor-peerweave.mjs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@biomejs/biome": "2.5.15",
     "@types/node": "26.6.5",
     "@vitest/coverage-v8": "5.0.4",

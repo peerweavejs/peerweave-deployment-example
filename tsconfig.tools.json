@@ -6,6 +6,7 @@
     "tests/**/*.ts",
     "apps/*/tests/**/*.ts",
     "apps/*/vite.config.ts",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "vitest.e2e.config.ts"
   ]
 }

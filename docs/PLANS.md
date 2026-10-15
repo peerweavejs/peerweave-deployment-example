@@ -1,6 +1,7 @@
 # Plans
 
-No active implementation plan remains. The [active directory](exec-plans/active/README.md)
+No active implementation remains. The [browser regression ownership plan](exec-plans/completed/003-browser-regressions.md)
+records the richer UI's single ownership and preserved assertions. The [active directory](exec-plans/active/README.md)
 explains the next-change workflow. The [completed bootstrap](exec-plans/completed/001-bootstrap.md)
 records acceptance, decisions, test-first evidence and verification commands. The
 [completed publication](exec-plans/completed/002-open-source-publication.md) records canonical
