@@ -1,6 +1,6 @@
 # Quality score and evidence
 
-Measured locally on 2026-10-15. The private single-host reference is implemented. Public/network
+Measured locally and in GitHub CI on 2026-10-15. The private single-host reference is implemented. Public/network
 and real-device acceptance remains external work; this is not an availability or public-service claim.
 
 | Area | Status | Observed evidence |
@@ -31,6 +31,10 @@ The framework independently passed its full gate, all existing browser regressio
 UDP/TCP TURN contract after production assets moved out. No framework API changes were needed.
 See the [completed plan](exec-plans/completed/001-bootstrap.md) for the test-first sequence.
 
-CI was configured, not run remotely. No remote repository, commit, push, package publication or
-production deployment was performed. Provide production hostnames, credentials, membership,
-secret/certificate files and external acceptance evidence using the [deployment guide](webrtc-production.md).
+The public repository is [peerweavejs/peerweave-deployment-example](https://github.com/peerweavejs/peerweave-deployment-example).
+[GitHub CI passed](https://github.com/peerweavejs/peerweave-deployment-example/actions/runs/38757877341)
+the complete app gate, both image builds, actual authenticated Traefik HTTPS/WSS and controlled
+Coturn UDP/TCP/TLS/SNI checks at commit `ffb27fd1e886a93c116193f89cb13c3a00cdbead`.
+Source was committed and pushed; no package publication or production deployment was performed.
+Provide production hostnames, credentials, membership, secret/certificate files and external
+acceptance evidence using the [deployment guide](webrtc-production.md).

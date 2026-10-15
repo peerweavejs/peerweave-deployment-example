@@ -1,5 +1,5 @@
 # Active work
 
-No active implementation plan remains after bootstrap. Start the next scoped change here and
+No active implementation plan remains after bootstrap and publication. Start the next scoped change here and
 link it from `docs/PLANS.md`. Preserve completed decisions and verification evidence in the
 [bootstrap plan](../completed/001-bootstrap.md); known follow-ups stay in the debt tracker.

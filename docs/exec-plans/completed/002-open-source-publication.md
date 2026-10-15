@@ -1,14 +1,14 @@
 # Publish the independent deployment example
 
-Status: in progress, 2026-10-15. User authorized commits and public GitHub publication under peerweavejs.
+Status: complete, 2026-10-15. User authorized commits and public GitHub publication under peerweavejs.
 
 - [x] Prepare complete README, badges, contribution/security/community guidance and templates.
 - [x] Use canonical org links and metadata; retain private application access and unpublished packages.
 - [x] Replace the copied external article with an attributed reference summary.
 - [x] Refresh archives/provenance from the reviewed, committed framework.
 - [x] Run the app/deployment gates, inspect the commit contents and commit the new repo.
-- [ ] Create peerweavejs/peerweave-deployment-example, push and configure About topics/settings.
-- [ ] Verify published branches, license, community files and remote CI status.
+- [x] Create peerweavejs/peerweave-deployment-example, push and configure About topics/settings.
+- [x] Verify published branches, license, community files and remote CI status.
 
 No npm publication, production deployment or account credentials are in scope. The framework's
 existing public repo is being transferred/renamed with history; this application gets its first repo.
@@ -24,3 +24,12 @@ Traefik HTTPS/ICE/WSS and Coturn UDP/TCP/TLS/SNI relay tests. The built app used
 credentials and selected relay candidates for native media/chat/file exchange. Temporary resources
 were removed. The 121 staged files and all four archive contents were reviewed; private runtime
 files and generated/editor output are excluded.
+
+Published [peerweavejs/peerweave-deployment-example](https://github.com/peerweavejs/peerweave-deployment-example)
+as a public repository with main tracking the canonical SSH origin. Initial implementation commit:
+`ffb27fd1e886a93c116193f89cb13c3a00cdbead`. GitHub detected the MIT license, README,
+contribution guide and code of conduct; issue/PR templates and 15 discovery topics are present.
+Private vulnerability reporting and dependency vulnerability alerts are enabled. Both local and
+remote checks passed: [GitHub Actions run](https://github.com/peerweavejs/peerweave-deployment-example/actions/runs/38757877341)
+verified the app, both images, actual Traefik and all controlled Coturn paths.
+Package publication and production deployment remain separate actions.
