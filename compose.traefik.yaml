@@ -1,0 +1,109 @@
+name: peerweave-edge
+
+x-traefik-image: &traefik-image traefik:v3@sha256:575fa15b135078fe5e50aa847987d96dbddd7b093c172429618404df73f3fa7c
+
+services:
+  acme-init:
+    image: *traefik-image
+    user: "0:0"
+    network_mode: none
+    read_only: true
+    cap_drop: [ALL]
+    cap_add: [CHOWN]
+    security_opt: [no-new-privileges:true]
+    entrypoint: [/bin/sh, -ec]
+    command:
+      - |
+        umask 077
+        chown 0:0 /letsencrypt
+        chmod 0700 /letsencrypt
+        if [ ! -e /letsencrypt/acme.json ]; then touch /letsencrypt/acme.json; fi
+        chown 0:0 /letsencrypt/acme.json
+        chmod 0600 /letsencrypt/acme.json
+        chown 65532:65532 /letsencrypt/acme.json
+        chown 65532:65532 /letsencrypt
+    volumes:
+      - acme:/letsencrypt
+    restart: "no"
+
+  docker-api:
+    image: tecnativa/docker-socket-proxy:latest@sha256:1f5038b54f06c3e18422902cf00ba21803d1c97805aae032e5e6673d532d3459
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: [/run, /tmp]
+    command: [haproxy, -f, /etc/haproxy/peerweave.cfg]
+    volumes:
+      - ./deploy/traefik/docker-api.cfg:/etc/haproxy/peerweave.cfg:ro
+      - type: bind
+        source: ${DOCKER_SOCKET_PATH:-/var/run/docker.sock}
+        target: /var/run/docker.sock
+        read_only: true
+        bind:
+          create_host_path: false
+    networks: [docker-api]
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1:2375/_ping]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+    stop_grace_period: 5s
+    logging: &logging
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  traefik:
+    image: *traefik-image
+    user: "65532:65532"
+    restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: [/tmp]
+    command: [--configFile=/etc/traefik/traefik.yaml]
+    depends_on:
+      acme-init:
+        condition: service_completed_successfully
+      docker-api:
+        condition: service_healthy
+    ports:
+      - "80:8080"
+      - "443:8443"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      # Set only after Coturn has a valid certificate and is reachable from this container.
+      TURN_DOMAIN: ${TURN_DOMAIN:-}
+      TURN_BACKEND: ${TURN_BACKEND:-host.docker.internal:5349}
+    volumes:
+      - ./deploy/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - ./deploy/traefik/dynamic:/etc/traefik/dynamic:ro
+      - acme:/letsencrypt
+    secrets: [traefik_users]
+    networks: [proxy, docker-api]
+    healthcheck:
+      test: [CMD, traefik, healthcheck, --ping, --configFile=/etc/traefik/traefik.yaml]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+    logging: *logging
+
+secrets:
+  traefik_users:
+    file: ${TRAEFIK_USERS_FILE:?Set TRAEFIK_USERS_FILE to the bcrypt htpasswd file}
+
+volumes:
+  acme:
+
+networks:
+  proxy:
+    external: true
+    name: ${TRAEFIK_NETWORK:-traefik}
+  docker-api:
+    internal: true

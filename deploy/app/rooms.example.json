@@ -1,0 +1,5 @@
+{
+  "hello": ["alice", "bob"],
+  "support-hello": ["alice", "bob"],
+  "files-hello": ["alice", "bob"]
+}

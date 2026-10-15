@@ -1,0 +1,14 @@
+node_modules/
+**/dist/
+**/.gyral/
+.artifacts/
+coverage/
+.env
+.env.turn
+.env.traefik
+deploy/turn/private/
+deploy/turn/tls/
+deploy/traefik/private/
+deploy/app/private/
+.idea/
+*.log

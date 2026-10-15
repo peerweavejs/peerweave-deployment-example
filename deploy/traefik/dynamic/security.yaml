@@ -1,0 +1,26 @@
+http:
+  middlewares:
+    strip-identity:
+      headers:
+        customRequestHeaders:
+          Remote-User: ""
+    login:
+      basicAuth:
+        usersFile: /run/secrets/traefik_users
+        realm: Peerweave
+        headerField: Remote-User
+        removeHeader: true
+    security-headers:
+      headers:
+        contentTypeNosniff: true
+        frameDeny: true
+        referrerPolicy: same-origin
+        stsSeconds: 86400
+    private-access:
+      chain:
+        middlewares: [strip-identity, login, security-headers]
+
+tls:
+  options:
+    default:
+      minVersion: VersionTLS12

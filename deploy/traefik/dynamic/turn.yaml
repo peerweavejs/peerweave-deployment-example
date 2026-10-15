@@ -1,0 +1,16 @@
+{{ if env "TURN_DOMAIN" }}
+# Traefik's FILE provider supports templates; its static traefik.yaml does not.
+tcp:
+  routers:
+    peerweave-turn:
+      entryPoints: [websecure]
+      rule: 'HostSNI(`{{ env "TURN_DOMAIN" }}`)'
+      service: peerweave-turn
+      tls:
+        passthrough: true
+  services:
+    peerweave-turn:
+      loadBalancer:
+        servers:
+          - address: '{{ env "TURN_BACKEND" }}'
+{{ end }}

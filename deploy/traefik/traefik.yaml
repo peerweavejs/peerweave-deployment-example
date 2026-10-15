@@ -1,0 +1,76 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+entryPoints:
+  web:
+    address: :8080
+    http:
+      aliasHeadersStrategy: reject
+      encodedCharacters:
+        allowEncodedSlash: false
+        allowEncodedBackSlash: false
+        allowEncodedSemicolon: false
+        allowEncodedPercent: false
+        allowEncodedQuestionMark: false
+        allowEncodedHash: false
+        allowEncodedNullCharacter: false
+      redirections:
+        entryPoint:
+          to: ":443"
+          scheme: https
+          permanent: true
+  websecure:
+    address: :8443
+    http:
+      aliasHeadersStrategy: reject
+      encodedCharacters:
+        allowEncodedSlash: false
+        allowEncodedBackSlash: false
+        allowEncodedSemicolon: false
+        allowEncodedPercent: false
+        allowEncodedQuestionMark: false
+        allowEncodedHash: false
+        allowEncodedNullCharacter: false
+      middlewares: [private-access@file]
+    transport:
+      respondingTimeouts:
+        readTimeout: 60s
+        writeTimeout: 0s
+        idleTimeout: 180s
+  ping:
+    address: :8082
+    http:
+      aliasHeadersStrategy: reject
+
+providers:
+  docker:
+    endpoint: tcp://docker-api:2375
+    exposedByDefault: false
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      # Optionally add email: your-real-operations-address@example.com
+      storage: /letsencrypt/acme.json
+      httpChallenge:
+        entryPoint: web
+
+api:
+  dashboard: false
+ping:
+  entryPoint: ping
+log:
+  level: INFO
+  format: json
+accessLog:
+  format: json
+  fields:
+    defaultMode: keep
+    names:
+      ClientUsername: drop
+    headers:
+      defaultMode: drop

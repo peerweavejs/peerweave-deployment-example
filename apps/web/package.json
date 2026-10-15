@@ -1,0 +1,23 @@
+{
+  "name": "@peerweave-example/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@gyral/core": "0.3.6",
+    "@peerweave/call": "0.1.0",
+    "@peerweave/media": "0.1.0",
+    "@peerweave/peer": "0.1.0",
+    "@peerweave/signaling-websocket": "0.1.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@gyral/testing": "0.3.6",
+    "parse5": "8.0.1"
+  },
+  "license": "MIT"
+}

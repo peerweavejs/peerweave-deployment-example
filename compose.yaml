@@ -1,0 +1,87 @@
+name: peerweave-example
+
+services:
+  web:
+    image: ${PEERWEAVE_IMAGE_PREFIX:-peerweave-example}-web:${PEERWEAVE_IMAGE_TAG:-local}
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1:8080/health]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: ${TRAEFIK_NETWORK:-traefik}
+      traefik.http.routers.peerweave-web.rule: Host(`${PEERWEAVE_DOMAIN:?Set PEERWEAVE_DOMAIN to the public hostname}`)
+      traefik.http.routers.peerweave-web.entrypoints: ${TRAEFIK_ENTRYPOINT:-websecure}
+      traefik.http.routers.peerweave-web.tls: "true"
+      traefik.http.routers.peerweave-web.tls.certresolver: ${TRAEFIK_CERT_RESOLVER:-}
+      traefik.http.routers.peerweave-web.middlewares: ${TRAEFIK_MIDDLEWARES:-}
+      traefik.http.routers.peerweave-web.service: peerweave-web
+      traefik.http.services.peerweave-web.loadbalancer.server.port: "8080"
+
+  signaling:
+    secrets: [room_members, turn_auth_secret]
+    image: ${PEERWEAVE_IMAGE_PREFIX:-peerweave-example}-signaling:${PEERWEAVE_IMAGE_TAG:-local}
+    restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      NODE_ENV: production
+      PEERWEAVE_MODE: production
+      ROOM_POLICY_FILE: /run/secrets/room_members
+      TURN_AUTH_SECRET_FILE: /run/secrets/turn_auth_secret
+      TURN_URLS: ${TURN_URLS:?Set TURN_URLS to the public TURN URLs}
+      PEERWEAVE_ICE_POLICY: ${PEERWEAVE_ICE_POLICY:-all}
+      PEERWEAVE_HOST: 0.0.0.0
+      PEERWEAVE_PORT: "8787"
+      PEERWEAVE_ALLOWED_ORIGINS: https://${PEERWEAVE_DOMAIN:?Set PEERWEAVE_DOMAIN to the public hostname}
+    networks:
+      - proxy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - --eval
+        - >-
+          fetch('http://127.0.0.1:8787/health', {signal: AbortSignal.timeout(2000)}).then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: ${TRAEFIK_NETWORK:-traefik}
+      traefik.http.routers.peerweave-signaling.rule: Host(`${PEERWEAVE_DOMAIN:?Set PEERWEAVE_DOMAIN to the public hostname}`) && (Path(`/signaling`) || PathPrefix(`/api/`))
+      traefik.http.routers.peerweave-signaling.entrypoints: ${TRAEFIK_ENTRYPOINT:-websecure}
+      traefik.http.routers.peerweave-signaling.tls: "true"
+      traefik.http.routers.peerweave-signaling.tls.certresolver: ${TRAEFIK_CERT_RESOLVER:-}
+      traefik.http.routers.peerweave-signaling.middlewares: ${TRAEFIK_MIDDLEWARES:-}
+      traefik.http.routers.peerweave-signaling.service: peerweave-signaling
+      traefik.http.services.peerweave-signaling.loadbalancer.server.port: "8787"
+
+networks:
+  proxy:
+    external: true
+    name: ${TRAEFIK_NETWORK:-traefik}
+
+secrets:
+  room_members:
+    file: ${ROOM_POLICY_FILE:?Set ROOM_POLICY_FILE to the private room membership JSON}
+  turn_auth_secret:
+    file: ${TURN_AUTH_SECRET_FILE:?Set TURN_AUTH_SECRET_FILE to the backend TURN secret copy}

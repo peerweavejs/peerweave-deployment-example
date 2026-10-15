@@ -1,0 +1,31 @@
+{
+  "source": "https://github.com/peerweavejs/peerweave",
+  "revision": "d3ac8713c2ff3a1c5851ee5f8b0f79d8535f8d42",
+  "packageSourcesClean": true,
+  "packages": [
+    {
+      "name": "@peerweave/peer",
+      "version": "0.1.0",
+      "archive": "peerweave-peer-0.1.0.tgz",
+      "sha256": "5e0bca8c3ba00e52fccac332032bcbe21cdd4d434a86f4db78e76fdee12c074c"
+    },
+    {
+      "name": "@peerweave/media",
+      "version": "0.1.0",
+      "archive": "peerweave-media-0.1.0.tgz",
+      "sha256": "d62fdf851d26d303cedef04b29e9cb5d64531d634bb0e00407a6bd3578bae1be"
+    },
+    {
+      "name": "@peerweave/call",
+      "version": "0.1.0",
+      "archive": "peerweave-call-0.1.0.tgz",
+      "sha256": "a43ec11970c5e0f1968fefccd179b87f058f1ed26da88c47c130af6d8eb00d58"
+    },
+    {
+      "name": "@peerweave/signaling-websocket",
+      "version": "0.1.0",
+      "archive": "peerweave-signaling-websocket-0.1.0.tgz",
+      "sha256": "011291aca2ecc60262a0a54311641642f4059bde0149772b5726f337f6afbc76"
+    }
+  ]
+}

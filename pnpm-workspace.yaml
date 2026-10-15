@@ -1,0 +1,13 @@
+packages:
+  - apps/*
+strictPeerDependencies: true
+minimumReleaseAgeExclude:
+  - playwright-core@1.64.1
+  - playwright@1.64.1
+  - '@gyral/core@0.3.6'
+  - '@gyral/testing@0.3.6'
+overrides:
+  '@peerweave/peer': file:vendor/peerweave/peerweave-peer-0.1.0.tgz
+  '@peerweave/media': file:vendor/peerweave/peerweave-media-0.1.0.tgz
+  '@peerweave/call': file:vendor/peerweave/peerweave-call-0.1.0.tgz
+  '@peerweave/signaling-websocket': file:vendor/peerweave/peerweave-signaling-websocket-0.1.0.tgz
