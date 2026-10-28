@@ -1,6 +1,6 @@
 # Frontend
 
-Gyral 0.3.6 owns pure views/models. Controllers/drivers own signaling, capture, streams, native
+Gyral 0.3.7 owns pure views/models. Controllers/drivers own signaling, capture, streams, native
 channels and object URLs. Use installed Peerweave package exports, semantic native controls,
 accessible feedback and the existing layered CSS. Retain font license files.
 

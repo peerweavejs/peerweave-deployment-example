@@ -53,3 +53,10 @@ and the built native app smoke. Browser checks include the four routes in both t
 Chromium, Firefox and WebKit, mobile layout, keyboard navigation, 200% zoom and axe. Coverage
 remains the values above. The complete workflow runs these checks before its existing image,
 Traefik and Coturn gates. See the [completed plan](exec-plans/completed/003-browser-regressions.md).
+
+## Gyral 0.3.7 upgrade (2026-10-28)
+
+`@gyral/core` and `@gyral/testing` moved from 0.3.6 to 0.3.7 with no app source change. `pnpm check`
+passed all 42 unit/model/request cases, all 18 browser cases and the built app smoke, with the
+coverage values above unchanged. Image and Docker deployment checks were not rerun for this
+dependency change. See the [completed plan](exec-plans/completed/004-gyral-0.3.7.md).

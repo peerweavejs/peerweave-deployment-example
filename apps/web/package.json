@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@gyral/core": "0.3.6",
+    "@gyral/core": "0.3.7",
     "@peerweave/call": "0.1.0",
     "@peerweave/media": "0.1.0",
     "@peerweave/peer": "0.1.0",
@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@gyral/testing": "0.3.6",
+    "@gyral/testing": "0.3.7",
     "parse5": "8.0.1"
   },
   "license": "MIT"
