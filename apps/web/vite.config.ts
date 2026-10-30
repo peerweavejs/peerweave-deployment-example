@@ -1,12 +1,10 @@
 import { resolve } from "node:path";
-import { gyralVitePreset } from "@gyral/core/vite";
+import { gyral } from "@gyral/core/vite";
 import { defineConfig } from "vite";
 
-const preset = gyralVitePreset({ clientOnly: true });
 export default defineConfig({
-  ...preset,
+  plugins: [gyral({ clientOnly: true })],
   optimizeDeps: {
-    ...preset.optimizeDeps,
     entries: ["src/main.ts", "src/media/main.ts", "src/transfer/main.ts", "src/support/main.ts"],
   },
   build: {

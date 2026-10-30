@@ -23,7 +23,7 @@ export type MediaMsg =
   | { readonly _tag: "Action"; readonly action: MediaAction }
   | { readonly _tag: "Failed"; readonly error: string };
 export const mediaActions = defineDriver<MediaAction, void, string>("example-action");
-const mediaEvents = defineDriver<void, MediaView>("example-events");
+export const mediaEvents = defineDriver<void, MediaView>("example-events");
 /** The page's mood, as `main[data-phase]`: it picks the hue and the preview ring's motion. */
 export const mediaMood = (view: MediaView) => (view.phase === "ready" ? "live" : view.phase);
 const deviceRow = (device: DeviceChoice, selected: boolean): TemplateResult =>

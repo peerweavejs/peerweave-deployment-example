@@ -1,8 +1,13 @@
 # Frontend
 
-Gyral 0.3.7 owns pure views/models. Controllers/drivers own signaling, capture, streams, native
+Gyral 0.3.8 owns pure views/models. Controllers/drivers own signaling, capture, streams, native
 channels and object URLs. Use installed Peerweave package exports, semantic native controls,
 accessible feedback and the existing layered CSS. Retain font license files.
+
+A component renders only when its state or a declared prop (`initialRoom`) changes, so a view
+reads nothing else. A new stream reaches the view as the snapshot's `revision`, which re-runs the
+media hooks. Each entry gives its element the driver list from `bindRuntime`, whose state feed
+implements the component's `example-events` token, so both must agree on the state type.
 
 Obtain room-authorized ICE configuration before creating a peer. A failed fetch must surface
 an error and must not open signaling with fallback credentials. Dispose pending work when the

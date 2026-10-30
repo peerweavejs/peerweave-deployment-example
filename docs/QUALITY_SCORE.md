@@ -60,3 +60,13 @@ Traefik and Coturn gates. See the [completed plan](exec-plans/completed/003-brow
 passed all 42 unit/model/request cases, all 18 browser cases and the built app smoke, with the
 coverage values above unchanged. Image and Docker deployment checks were not rerun for this
 dependency change. See the [completed plan](exec-plans/completed/004-gyral-0.3.7.md).
+
+## Gyral 0.3.8 upgrade (2026-10-29)
+
+`@gyral/core` and `@gyral/testing` moved from 0.3.7 to 0.3.8. The Vite config uses `gyral()`,
+the page runtime supplies its drivers as a list typed by each page's token, and the transfer
+page's file parser uses `on()`. `pnpm check` passed all 42 unit/model/request cases, all 18
+browser cases and the built app smoke, with the coverage values above unchanged. The image build
+and both Docker deployment checks passed. With Gyral's development checks forced on, no view
+rendered differently when skipped. Built JavaScript and CSS grew by 842 bytes gzipped. See the
+[completed plan](exec-plans/completed/005-gyral-0.3.8.md).

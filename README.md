@@ -30,7 +30,7 @@ packaged public APIs and can build without a sibling framework checkout.
 
 | Component | Responsibility |
 | --- | --- |
-| `apps/web` | Four Gyral 0.3.7 pages: calls/chat, media preflight, accepted file transfers and support invitations |
+| `apps/web` | Four Gyral 0.3.8 pages: calls/chat, media preflight, accepted file transfers and support invitations |
 | `apps/server` | Trusted proxy identity, explicit room membership, authorized ICE leases and two-member signaling |
 | [`compose.yaml`](compose.yaml) | Prebuilt static-web and backend images; no published app ports |
 | [`compose.traefik.yaml`](compose.traefik.yaml) | HTTPS/WSS, ACME state, private BasicAuth and restricted Docker discovery |

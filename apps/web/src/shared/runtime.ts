@@ -1,4 +1,4 @@
-import { type DriverOverrides, defineDriver, defineHook, subscription } from "@gyral/core";
+import { type Driver, type DriverList, defineDriver, defineHook, subscription } from "@gyral/core";
 
 export interface ExampleRuntime<S, A> {
   subscribe(listener: (state: S) => void): () => void;
@@ -23,28 +23,35 @@ export class Observable<S> {
 }
 type VideoOwner = Pick<ExampleRuntime<unknown, never>, "getStream">;
 const owners = new WeakMap<Element, VideoOwner>();
+/**
+ * The page's drivers, as a list. Its state feed implements the page's own `example-events` token,
+ * so the runtime's state must be the type the component reads. The action driver keeps its own
+ * `toError`, which `token.provide(run)` would take from the component's token instead.
+ */
 export function bindRuntime<S, A>(
   host: HTMLElement,
   runtime: ExampleRuntime<S, A>,
-): DriverOverrides {
+  events: Driver<void, S>,
+): DriverList {
   owners.set(host, runtime);
-  const events = subscription<S>("example-events", (emit) => {
-    const detach = runtime.subscribe(emit);
-    const leave = () => runtime.dispose();
-    window.addEventListener("pagehide", leave);
-    return () => {
-      detach();
-      window.removeEventListener("pagehide", leave);
-      owners.delete(host);
-      runtime.dispose();
-    };
-  });
-  const actions = defineDriver<A, void, string>({
-    name: "example-action",
-    run: (action) => runtime.act(action),
-    toError: errorText,
-  });
-  return { "example-events": events, "example-action": actions };
+  return [
+    subscription(events, (emit) => {
+      const detach = runtime.subscribe(emit);
+      const leave = () => runtime.dispose();
+      window.addEventListener("pagehide", leave);
+      return () => {
+        detach();
+        window.removeEventListener("pagehide", leave);
+        owners.delete(host);
+        runtime.dispose();
+      };
+    }),
+    defineDriver<A, void, string>({
+      name: "example-action",
+      run: (action) => runtime.act(action),
+      toError: errorText,
+    }),
+  ];
 }
 function streamFor(element: Element, slot: "local" | "remote"): MediaStream | null {
   let ancestor: Element | null = element;

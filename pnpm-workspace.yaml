@@ -4,8 +4,9 @@ strictPeerDependencies: true
 minimumReleaseAgeExclude:
   - playwright-core@1.64.1
   - playwright@1.64.1
-  - '@gyral/core@0.3.7'
-  - '@gyral/testing@0.3.7'
+  # Gyral 0.3.8 was published on 2026-10-29; these two entries end on 2026-11-12.
+  - '@gyral/core@0.3.8'
+  - '@gyral/testing@0.3.8'
 overrides:
   '@peerweave/peer': file:vendor/peerweave/peerweave-peer-0.1.0.tgz
   '@peerweave/media': file:vendor/peerweave/peerweave-media-0.1.0.tgz

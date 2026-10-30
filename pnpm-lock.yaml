@@ -210,8 +210,8 @@ importers:
   apps/web:
     dependencies:
       '@gyral/core':
-        specifier: 0.3.7
-        version: 0.3.7(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5))
+        specifier: 0.3.8
+        version: 0.3.8(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5))
       '@peerweave/call':
         specifier: file:../../vendor/peerweave/peerweave-call-0.1.0.tgz
         version: file:vendor/peerweave/peerweave-call-0.1.0.tgz
@@ -226,8 +226,8 @@ importers:
         version: file:vendor/peerweave/peerweave-signaling-websocket-0.1.0.tgz
     devDependencies:
       '@gyral/testing':
-        specifier: 0.3.7
-        version: 0.3.7(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5))(vitest@5.0.4)
+        specifier: 0.3.8
+        version: 0.3.8(@gyral/core@0.3.8(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5)))(vitest@5.0.4)
       parse5:
         specifier: 8.0.1
         version: 8.0.1
@@ -317,8 +317,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@gyral/core@0.3.7':
-    resolution: {integrity: sha512-Hj6SokLKxrw7JxCRrzvk2mw3YIeGekSbiYq8SMJojTYCE93ZHlopuXUaT4336GZF7LM2T8UMiQtIWV2Y1SHtgA==}
+  '@gyral/core@0.3.8':
+    resolution: {integrity: sha512-ropgXPkujMoeCaqnpU1Zcf6LstLwAkBY0w/w5dM5WMvOCjwQ+vHDLB5/7QY/Mje5uSbz9vQolL/ry7HkN8/4Lw==}
     hasBin: true
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
@@ -332,9 +332,10 @@ packages:
       vite:
         optional: true
 
-  '@gyral/testing@0.3.7':
-    resolution: {integrity: sha512-toSIqxL/MXbo2z9VyLjc7tYuySKQemN2EiJUaVff3S+SPc4/ynE9WKIDPpUxXtjKFQZADTnjo+WOSNf0UAnVtA==}
+  '@gyral/testing@0.3.8':
+    resolution: {integrity: sha512-NJLgjcewj+sEAXACYOL7/XY9mtqqwOkB0PUiIflKiz2rd5piHyg9IUgQBe/Dk/tjL+S+NX6bHnLofsOVedtNUQ==}
     peerDependencies:
+      '@gyral/core': 0.3.8
       vitest: ^4.1.0 || ^5.0.0
     peerDependenciesMeta:
       vitest:
@@ -1007,24 +1008,20 @@ snapshots:
   '@biomejs/cli-win32-x64@2.5.15':
     optional: true
 
-  '@gyral/core@0.3.7(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5))':
+  '@gyral/core@0.3.8(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5))':
     dependencies:
       '@standard-schema/spec': 1.1.0
     optionalDependencies:
       parse5: 8.0.1
       vite: 8.3.4(@types/node@26.6.5)
 
-  '@gyral/testing@0.3.7(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5))(vitest@5.0.4)':
+  '@gyral/testing@0.3.8(@gyral/core@0.3.8(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5)))(vitest@5.0.4)':
     dependencies:
-      '@gyral/core': 0.3.7(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5))
+      '@gyral/core': 0.3.8(parse5@8.0.1)(vite@8.3.4(@types/node@26.6.5))
       '@sinonjs/fake-timers': 15.4.0
       '@standard-schema/spec': 1.1.0
     optionalDependencies:
       vitest: 5.0.4(@types/node@26.6.5)(@vitest/coverage-v8@5.0.4)(vite@8.3.4(@types/node@26.6.5))
-    transitivePeerDependencies:
-      - eslint
-      - parse5
-      - vite
 
   '@jridgewell/resolve-uri@3.1.2': {}
 
