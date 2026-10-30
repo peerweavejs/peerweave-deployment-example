@@ -1,4 +1,4 @@
-import { command, define, defineDriver, html, prop } from "@gyral/core";
+import { command, define, defineDriver, html, on, prop } from "@gyral/core";
 import { icons } from "../shared/icons.js";
 import { fileDrop } from "../shared/runtime.js";
 import {
@@ -59,7 +59,7 @@ const moodLabel: Record<TransferMood, string> = {
 const extension = (name: string) =>
   name.includes(".") ? (name.split(".").pop() ?? "").slice(0, 4) : "file";
 export const transferActions = defineDriver<TransferAction, void, string>("example-action");
-const transferEvents = defineDriver<void, TransferView>("example-events");
+export const transferEvents = defineDriver<void, TransferView>("example-events");
 export const Transfer = define<TransferModel, TransferMsg, { readonly initialRoom: string }>()(
   "peerweave-transfer",
   {
@@ -77,10 +77,10 @@ export const Transfer = define<TransferModel, TransferMsg, { readonly initialRoo
         /^[A-Za-z0-9_-]{1,48}$/.test(ctx.state.room)
           ? { _tag: "Action", action: { _tag: "Join", room: ctx.state.room } }
           : { _tag: "Failed", error: "Use 1–48 letters, numbers, underscores or hyphens." },
-      Select: ({ target }) => {
-        const file = target instanceof HTMLInputElement ? target.files?.[0] : undefined;
+      Select: on("change", ({ files }) => {
+        const file = files?.[0];
         return file ? { _tag: "Action", action: { _tag: "Select", file } } : undefined;
-      },
+      }),
       Offer: () => ({ _tag: "Action", action: { _tag: "Offer" } }),
       Accept: () => ({ _tag: "Action", action: { _tag: "Accept" } }),
       Reject: () => ({ _tag: "Action", action: { _tag: "Reject" } }),
